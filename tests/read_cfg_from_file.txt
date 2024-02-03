@@ -1,9 +1,0 @@
-S -> Va A | Va V0
-V0 -> Vb V1
-V1 -> Vc Vd
-A -> Va S
-Va -> a
-Vc -> c
-Vb -> b
-Vd -> d
-A -> epsilon
