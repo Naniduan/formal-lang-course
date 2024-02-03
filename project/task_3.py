@@ -14,7 +14,6 @@ __all__ = [
 
 
 class FAMatrix:
-
     """adjacency matrix of a finite automaton + its symbols, start and final states, its size and
     a list of states, which is necessary to reconstruct the original states from indices in the matrix"""
 
@@ -36,7 +35,6 @@ class FAMatrix:
 
 
 def matrix_from_fa_graph(graph):
-
     """generates an adjacency matrix from a finite automaton"""
 
     edges = list(graph.edges(data="label", default="ɛ"))
@@ -76,13 +74,15 @@ def matrix_from_fa_graph(graph):
     return FAMatrix(matrix, symbols, starts, finals, size, state_from_number)
 
 
-def bool_dec(matrix: FAMatrix):
-
+def bool_dec(matrix: FAMatrix, symbols=None):
     """boolean decomposition of an adjacency matrix"""
+
+    if symbols is None:
+        symbols = matrix.symbols
 
     matrices = dict()
 
-    for symbol in matrix.symbols:
+    for symbol in symbols:
         matrices[symbol] = sp.csr_matrix((matrix.size, matrix.size), dtype=bool)
 
     for state_from in range(matrix.size):
@@ -94,7 +94,6 @@ def bool_dec(matrix: FAMatrix):
 
 
 def kronecker(matrixA: FAMatrix, matrixB: FAMatrix):
-
     """Kronecker product of adjacency matrices"""
 
     size = matrixA.size * matrixB.size
@@ -150,7 +149,6 @@ def kronecker(matrixA: FAMatrix, matrixB: FAMatrix):
 
 
 def intersect_finite_automata(A, B):
-
     """takes two automata and returns their intersection, which is calculated through Kronecker product
     of adjacency matrices"""
 
@@ -178,13 +176,14 @@ def intersect_finite_automata(A, B):
     return get_nfa_from_graph(graph, matrix.starts, matrix.finals)
 
 
-def csr_matrices_are_equal(A, B, size):
-
+def csr_matrices_are_equal(A, B, size, size2=None):
     """compares sparse matrices"""
+    if size2 is None:
+        size2 = size
 
     answer = True
     for i in range(size):
-        for j in range(size):
+        for j in range(size2):
             if A[i, j] != B[i, j]:
                 answer = False
                 break
@@ -194,7 +193,6 @@ def csr_matrices_are_equal(A, B, size):
 
 
 def regex_path_in_automaton(regex, graph, starts, finals):
-
     """takes regex, graph, and start and final states of the graph, and returns pairs of start and final states that
     are connected by a path, that forms a word, that is recognized by regex"""
 

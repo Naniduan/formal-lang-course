@@ -10,9 +10,8 @@ __all__ = ["get_dfa_from_regex", "get_nfa_from_graph"]
 def get_dfa_from_regex(regex):
     """takes a regular expression and returns an equivalent deterministic final automaton"""
 
-    enfa = regex.to_epsilon_nfa()
-    dfa = enfa.to_deterministic()
-    return dfa
+    dfa = regex.to_epsilon_nfa().minimize()
+    return dfa.remove_epsilon_transitions()
 
 
 def get_nfa_from_graph(graph, start=None, final=None):
@@ -52,5 +51,7 @@ def get_nfa_from_graph(graph, start=None, final=None):
                 symbols[edge[2]] = Symbol(edge[2])
 
         nfa.add_transition(states[edge[0]], symbols[edge[2]], states[edge[1]])
+
+    nfa = nfa.remove_epsilon_transitions()
 
     return nfa
