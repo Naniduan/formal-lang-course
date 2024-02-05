@@ -1,6 +1,9 @@
 from pyformlang.cfg import Production, Variable, Terminal, CFG, Epsilon
 
 
+__all__ = ["cfg_to_wcnf", "cfg_from_file"]
+
+
 def cfg_to_wcnf(grammar: CFG):
 
     """Takes a context-free grammar and turns it to weak Chomsky Normal Form"""
@@ -41,12 +44,9 @@ def cfg_to_wcnf(grammar: CFG):
             productions.add(production)
 
     new_grammar = CFG(variables, grammar.terminals, grammar.start_symbol, productions)
-    # print(new_grammar.to_text(), 'long bodies')
 
     new_grammar = new_grammar.eliminate_unit_productions()
-    # print(new_grammar.to_text(), 'eliminate_unit_productions')
     new_grammar = new_grammar.remove_useless_symbols()
-    # print(new_grammar.to_text(), 'remove_useless_symbols')
 
     # removing V -> t t and V -> V t productions
 
@@ -86,7 +86,6 @@ def cfg_to_wcnf(grammar: CFG):
     answer = CFG(
         variables, new_grammar.terminals, new_grammar.start_symbol, productions
     )
-    # print(answer.to_text(), 'removed t and V t bodies')
 
     return answer
 

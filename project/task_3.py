@@ -33,6 +33,16 @@ class FAMatrix:
         self.size = size
         self.states = states
 
+    def index_from_state(self):
+
+        """generates a dictionary, which allows to know index of a state in the matrix"""
+
+        answer = dict()
+        for i in range(self.size):
+            answer[self.states[i]] = i
+
+        return answer
+
 
 def matrix_from_fa_graph(graph):
     """generates an adjacency matrix from a finite automaton"""
