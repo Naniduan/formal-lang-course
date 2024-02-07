@@ -5,7 +5,7 @@ from project.automata_builder import get_nfa_from_graph
 from project.task_6 import cfg_to_wcnf
 
 
-def hellings(grammar: CFG, graph: MultiDiGraph, start="S"):
+def hellings(grammar: CFG, graph: MultiDiGraph):
 
     """runs Hellings algorithm on a grammar and a graph and
     returns a set of triplets (node1, variable, node2)"""
@@ -90,7 +90,7 @@ def hellings(grammar: CFG, graph: MultiDiGraph, start="S"):
     return answer
 
 
-def grammar_in_graph(
+def grammar_in_graph_with_hellings(
     grammar: CFG, graph: MultiDiGraph, starts=None, finals=None, start=None
 ):
 
