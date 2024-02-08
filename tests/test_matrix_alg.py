@@ -1,18 +1,16 @@
 import pytest
 from pyformlang.cfg import Production, Variable, Terminal, CFG, Epsilon
-
-from project.cfpq import cfpq
-from project.hellings import *
+from project.cfpq import *
 from networkx import MultiDiGraph
 
 
 def gen_res(grammar: CFG, graph: MultiDiGraph, starts=None, finals=None, start=None):
     return cfpq(
-        grammar, graph, algorithm="hellings", starts=starts, finals=finals, start=start
+        grammar, graph, algorithm="matrix", starts=starts, finals=finals, start=start
     )
 
 
-def test_hellings_1():
+def test_matrix_alg_1():
     productions = """
         S -> a"""
 
@@ -28,7 +26,7 @@ def test_hellings_1():
     assert result == expected
 
 
-def test_hellings_2():
+def test_matrix_alg_2():
     productions = """
         S -> epsilon"""
 
@@ -43,7 +41,7 @@ def test_hellings_2():
     assert result == expected
 
 
-def test_hellings_3():
+def test_matrix_alg_3():
     productions = """
         S -> a S b | epsilon"""
 
@@ -63,7 +61,7 @@ def test_hellings_3():
     assert result == expected
 
 
-def test_hellings_4():
+def test_matrix_alg_4():
     productions = """
         S -> a S b | epsilon"""
 
@@ -83,7 +81,7 @@ def test_hellings_4():
     assert result == expected
 
 
-def test_hellings_5():
+def test_matrix_alg_5():
     productions = """
         S -> A B | C D
         A -> a A | epsilon
@@ -110,7 +108,7 @@ def test_hellings_5():
     assert result == expected
 
 
-def test_hellings_6():
+def test_matrix_alg_6():
     productions = """
         S -> A B | C D
         A -> a A | epsilon
@@ -148,7 +146,7 @@ def test_hellings_6():
     assert result == expected
 
 
-def test_hellings_7():
+def test_matrix_alg_7():
     productions = """
             S -> A B
             S -> A S1
@@ -173,7 +171,7 @@ def test_hellings_7():
     assert result == expected
 
 
-def test_hellings_8():
+def test_matrix_alg_8():
     productions = """
             X -> epsilon"""
 
