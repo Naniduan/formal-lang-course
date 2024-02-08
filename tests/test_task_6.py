@@ -11,8 +11,6 @@ def test_wcnf_1():
     grammar = CFG.from_text(productions, "S")
     grammar = cfg_to_wcnf(grammar)
 
-    # print(grammar.to_text())
-
     expected = """
     S -> Va Vb
     Va -> a
@@ -28,8 +26,6 @@ def test_wcnf_2():
 
     grammar = CFG.from_text(productions, "S")
     grammar = cfg_to_wcnf(grammar)
-
-    # print(grammar.to_text())
 
     expected = """
     S -> A V0
@@ -53,8 +49,6 @@ def test_wcnf_3():
 
     grammar = CFG.from_text(productions, "S")
     grammar = cfg_to_wcnf(grammar)
-
-    # print(grammar.to_text())
 
     expected = """
     S -> Va A | Va V0
