@@ -10,6 +10,7 @@ __all__ = [
     "kronecker",
     "intersect_finite_automata",
     "regex_path_in_automaton",
+    "csr_matrices_are_equal",
 ]
 
 
@@ -103,7 +104,7 @@ def bool_dec(matrix: FAMatrix, symbols=None):
     return matrices
 
 
-def kronecker(matrixA: FAMatrix, matrixB: FAMatrix):
+def kronecker(matrixA: FAMatrix, matrixB: FAMatrix, symbols_used=None):
     """Kronecker product of adjacency matrices"""
 
     size = matrixA.size * matrixB.size
@@ -116,13 +117,18 @@ def kronecker(matrixA: FAMatrix, matrixB: FAMatrix):
     symbols = set()
     starts, finals = set(), set()
 
-    decompositionA = bool_dec(matrixA)
-    decompositionB = bool_dec(matrixB)
+    if symbols_used is None:
 
-    for symbol in matrixA.symbols:
-        symbols.add(symbol)
-    for symbol in matrixB.symbols:
-        symbols.add(symbol)
+        for symbol in matrixA.symbols:
+            symbols.add(symbol)
+        for symbol in matrixB.symbols:
+            symbols.add(symbol)
+
+    else:
+        symbols = symbols_used
+
+    decompositionA = bool_dec(matrixA, symbols)
+    decompositionB = bool_dec(matrixB, symbols)
 
     for symbol in symbols:
         symbol_matrix = sp.kron(decompositionA[symbol], decompositionB[symbol]).tocsr()
