@@ -2,6 +2,7 @@ from networkx import MultiDiGraph
 from pyformlang.cfg import Production, Variable, Terminal, CFG, Epsilon
 from project.hellings import hellings
 from project.matrix_alg import matrix_alg
+from project.tensor import tensor
 import numpy as np
 from scipy.sparse import csr_array
 
@@ -37,6 +38,10 @@ def cfpq(
         triplets = hellings(grammar, graph)
     elif algorithm == "matrix":
         triplets = matrix_alg(grammar, graph)
+    elif algorithm == "tensor":
+        triplets = tensor(grammar, graph)
+    else:
+        return
 
     answer = set()
     for triplet in triplets:
