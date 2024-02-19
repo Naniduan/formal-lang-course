@@ -1,3 +1,4 @@
+from networkx import MultiDiGraph
 from pyformlang.regular_expression import Regex
 from pyformlang.finite_automaton import DeterministicFiniteAutomaton
 import cfpq_data
@@ -14,7 +15,7 @@ def get_dfa_from_regex(regex):
     return dfa.remove_epsilon_transitions()
 
 
-def get_nfa_from_graph(graph, start=None, final=None):
+def get_nfa_from_graph(graph: MultiDiGraph, start=None, final=None):
     """takes a graph and generates a non-deterministic final automaton based on it.
     lists of start and final states/nodes can be given, otherwise all states
     will be start and final"""
@@ -55,3 +56,15 @@ def get_nfa_from_graph(graph, start=None, final=None):
     nfa = nfa.remove_epsilon_transitions()
 
     return nfa
+
+
+def get_nfa_from_nfa_graph(graph: MultiDiGraph):
+    starts = []
+    finals = []
+    for state in graph.nodes(data=True):
+        if "is_start" in state[1] and state[1]["is_start"]:
+            starts.append(state[0])
+        if "is_final" in state[1] and state[1]["is_final"]:
+            finals.append(state[0])
+
+    return get_nfa_from_graph(graph, starts, finals)
